@@ -54,23 +54,30 @@ export default class Combined extends Component {
 
       // data
 
-      if (i++ % 5 == 0)
+      if (i++ % 10 == 0) {
+
         date++; 
+      }
 
       labels.push('Mar ' + date);
     }
 
     // handle bar data
+    var smallestBar = smallestShadowL / 1.1;
+    var distance = smallestShadowL - smallestBar;
     for (var i in barDataValue) {
-      barDataValue[i] = barDataValue[i] / biggestVolume * smallestShadowL;
+      // barDataValue[i] = barDataValue[i] / biggestVolume * smallestShadowL;
+      barDataValue[i] = smallestBar + (barDataValue[i] / biggestVolume * distance);
     }
+
+    console.log(smallestBar);
 
     const config = {
       barData: {
         dataSets: [{
           values: barDataValue,
           drawValues: false,
-          colors: ['rgb(107, 243, 174)']
+          colors: ['rgb(211,211,211)']
         }]
       },
       candleData: {
@@ -82,19 +89,30 @@ export default class Combined extends Component {
       },
       drawBarShadowEnabled: false,
       backgroundColor: 'transparent',
-      // labels: ['1990', '1991', '1992', '1993', '1994', '1995'],
       labels: labels,
       showLegend: false,
+      drawBorders: true,
       xAxis: {
-        position: 'bottom'
+        position: 'bottom',
+        avoidFirstLastClipping: true,
+        gridDashedLine: {
+          lineLength: 1,
+          spaceLength: 1
+        },
       },
       leftAxis: {
+        drawLabels: false,
+        // enabled: false,
         drawGridLines: false,
-        spaceBottom: 0.05
+        spaceBottom: 0,
       },
       rightAxis: {
-        drawGridLines: false,
-        spaceBottom: 0.05
+        drawGridLines: true,
+        spaceBottom: 0,
+        gridDashedLine: {
+          lineLength: 1,
+          spaceLength: 1
+        }
       },
       valueFormatter: {
         type: 'regular',
