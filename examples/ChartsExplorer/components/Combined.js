@@ -15,6 +15,8 @@ const styles = StyleSheet.create({
   }
 });
 
+const monthString = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
+
 export default class Combined extends Component {
   static displayName = 'Combined';
 
@@ -53,13 +55,10 @@ export default class Combined extends Component {
         biggestVolume = trade.volume;
 
       // data
+      var date = new Date(trade.date);
+      var dateString = monthString[date.getMonth() - 1] + ' ' + date.getDay();
 
-      if (i++ % 10 == 0) {
-
-        date++; 
-      }
-
-      labels.push('Mar ' + date);
+      labels.push(dateString);
     }
 
     // handle bar data
