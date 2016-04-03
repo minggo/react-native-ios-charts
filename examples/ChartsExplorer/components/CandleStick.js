@@ -24,25 +24,25 @@ export default class CandleStick extends Component {
           shadowH: 20,
           shadowL: 0,
           open: 15,
-          close: 5
+          close: 5,
         }, {
           shadowH: 30,
           shadowL: 10,
           open: 25,
           close: 15
         }, {
-          shadowH: 10,
+          shadowH: 20,
           shadowL: 5,
           open: 15,
           close: 10
         }, {
-          shadowH: 50,
-          shadowL: 30,
+          shadowH: 30,
+          shadowL: 15,
           open: 25,
-          close: 15
+          close: 20
         }],
         drawValues: false,
-        colors: ['red'],
+        colors: ['red', 'green'],
         label: 'Company A'
       }],
       backgroundColor: 'transparent',
