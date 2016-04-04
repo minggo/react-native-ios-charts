@@ -26,7 +26,6 @@ export default class Combined extends Component {
     var candleDataValue = [];
     var candleDataColor = [];
     var labels = [];
-    var smallestShadowL = Number.MAX_VALUE;
     var biggestVolume = Number.MIN_VALUE;
 
     var trades = RawData.trades;
@@ -46,30 +45,24 @@ export default class Combined extends Component {
       var color = trade.open > trade.close ? 'green' : 'red';
       candleDataColor.push(color);
 
-      // find the smallest of shadowL
-      if (trade.low < smallestShadowL)
-        smallestShadowL = trade.low;
-
       // find biggest volume
       if (trade.volume > biggestVolume)
         biggestVolume = trade.volume;
 
       // data
       var date = new Date(trade.date);
-      var dateString = monthString[date.getMonth() - 1] + ' ' + date.getDay();
+      // var dateString = monthString[date.getMonth() - 1] + ' ' + date.getDay();
+      var dateString = monthString[date.getMonth() - 1] + ' ' + 22;
 
       labels.push(dateString);
     }
 
     // handle bar data
-    var smallestBar = smallestShadowL / 1.1;
-    var distance = smallestShadowL - smallestBar;
+    var smallestBar = RawData.min / 1.1;
+    var distance = RawData.min - smallestBar;
     for (var i in barDataValue) {
-      // barDataValue[i] = barDataValue[i] / biggestVolume * smallestShadowL;
       barDataValue[i] = smallestBar + (barDataValue[i] / biggestVolume * distance);
     }
-
-    console.log(smallestBar);
 
     const config = {
       barData: {
@@ -94,14 +87,14 @@ export default class Combined extends Component {
       xAxis: {
         position: 'bottom',
         avoidFirstLastClipping: true,
+        textSize: 7.5,
         gridDashedLine: {
           lineLength: 1,
           spaceLength: 1
-        },
+        }
       },
       leftAxis: {
         drawLabels: false,
-        // enabled: false,
         drawGridLines: false,
         spaceBottom: 0,
       },
